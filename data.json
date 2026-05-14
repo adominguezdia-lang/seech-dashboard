@@ -1,106 +1,82 @@
 {
-  "project": "Dashboard Abril",
-  "lastUpdate": "14/05, 10:01 p.m.",
-  "folders": [
+  "dashboard": "Dashboard Abril",
+  "lastUpdate": "14/05, 10:15 p.m.",
+  "stats": {
+    "totalProjects": 3,
+    "activeProjects": 2,
+    "pendingTasks": 8,
+    "completedToday": 1
+  },
+  "projects": [
     {
-      "name": "Generales",
-      "id": "1y9lKGmCShrse3i3qhsqGnc-6OoqPlnR6",
-      "url": "https://drive.google.com/drive/folders/1y9lKGmCShrse3i3qhsqGnc-6OoqPlnR6",
-      "files": [
+      "id": "seech-2026",
+      "name": "Evaluación SEECH 2026",
+      "emoji": "📋",
+      "status": "active",
+      "progress": "10%",
+      "lastActivity": "Plan detallado de trabajo generado",
+      "description": "Evaluación específica 2E207C1 — Cobertura en Educación Normal y Posgrado",
+      "nextMilestone": "30 JUN — Entrega E1 (Tema I + Anexo II)",
+      "driveUrl": "https://drive.google.com/drive/folders/1yGTI4AzT9IpxdDM1h9LT09v6JmZWQkS_",
+      "folders": [
         {
-          "name": "analisis_estatuto_organico_seech.md",
-          "size": "8.8KB",
-          "date": "14/05/2026",
-          "type": "markdown"
+          "name": "Generales",
+          "url": "https://drive.google.com/drive/folders/1y9lKGmCShrse3i3qhsqGnc-6OoqPlnR6",
+          "files": [
+            { "name": "analisis_estatuto_organico_seech.md", "size": "8.8KB", "date": "14/05/2026", "type": "markdown" },
+            { "name": "analisis_nota_aclaratoria_estatuto_organico.md", "size": "3.4KB", "date": "14/05/2026", "type": "markdown" }
+          ]
         },
         {
-          "name": "analisis_nota_aclaratoria_estatuto_organico.md",
-          "size": "3.4KB",
-          "date": "14/05/2026",
-          "type": "markdown"
-        }
-      ]
-    },
-    {
-      "name": "2E207C1",
-      "id": "1yGTI4AzT9IpxdDM1h9LT09v6JmZWQkS_",
-      "url": "https://drive.google.com/drive/folders/1yGTI4AzT9IpxdDM1h9LT09v6JmZWQkS_",
-      "files": [
+          "name": "2E207C1",
+          "url": "https://drive.google.com/drive/folders/1yGTI4AzT9IpxdDM1h9LT09v6JmZWQkS_",
+          "files": [
+            { "name": "Plan_Trabajo_2E207C1.md", "size": "8.7KB", "date": "14/05/2026", "type": "markdown" },
+            { "name": "Plan_Trabajo_2E207C1_detallado.md", "size": "11.2KB", "date": "14/05/2026", "type": "markdown" },
+            { "name": "TdR_Especifica_SEECH_2E207C1_2026.pdf", "size": "—", "date": "14/05/2026", "type": "pdf" }
+          ]
+        },
         {
-          "name": "Plan_Trabajo_2E207C1.md",
-          "size": "8.7KB",
-          "date": "14/05/2026",
-          "type": "markdown"
+          "name": "2E208C1",
+          "url": "https://drive.google.com/drive/folders/1EuIMbAJGSJ-OXGLGs59vcWBm8GyZ_pC1",
+          "files": []
         }
+      ],
+      "phases": [
+        { "name": "F0: Preparación", "dates": "15-18 MAY", "status": "pending" },
+        { "name": "F1: Gabinete Inicial", "dates": "19 MAY-30 JUN", "status": "pending" },
+        { "name": "F2: Trabajo de Campo", "dates": "1-31 JUL", "status": "pending" },
+        { "name": "F3: Análisis Integral", "dates": "1 AGO-17 SEP", "status": "pending" },
+        { "name": "F4: Cierre", "dates": "18 SEP-23 NOV", "status": "pending" }
       ]
     },
     {
-      "name": "2E208C1",
-      "id": "1EuIMbAJGSJ-OXGLGs59vcWBm8GyZ_pC1",
-      "url": "https://drive.google.com/drive/folders/1EuIMbAJGSJ-OXGLGs59vcWBm8GyZ_pC1",
-      "files": []
+      "id": "sicip",
+      "name": "SICIP Chihuahua",
+      "emoji": "🏛️",
+      "status": "paused",
+      "progress": "40%",
+      "lastActivity": "API AjaxPro descubierta — pendiente getData",
+      "description": "Extracción de datos PAE 2026 del portal SICIP",
+      "nextMilestone": "Obtener registros de Fuentes de Información PAE 2026",
+      "driveUrl": null,
+      "folders": []
+    },
+    {
+      "id": "comfyui",
+      "name": "Ilustraciones Abril",
+      "emoji": "🎨",
+      "status": "active",
+      "progress": "35%",
+      "lastActivity": "Workflow V5 dual IPAdapter listo",
+      "description": "Imágenes fotorrealistas de Abril con ComfyUI + JuggernautXL",
+      "nextMilestone": "Probar workflow V5 en Mac + ilustrar concha re mojada en café",
+      "driveUrl": null,
+      "folders": []
     }
   ],
-  "stats": {
-    "totalDocuments": 3,
-    "processedToday": 1,
-    "pendingProcessing": 0,
-    "lastActivity": "Plan detallado de trabajo generado — 4 fases, 4 entregables"
-  },
   "pipeline": {
     "status": "idle",
-    "currentTask": null,
-    "lastTask": "📋 Plan detallado listo. FASE 0: Preparación (15-18 MAY)"
-  },
-  "phases": [
-    {
-      "name": "F0: Preparación",
-      "dates": "15-18 MAY",
-      "status": "Pendiente",
-      "tasks": [
-        "Validar plan",
-        "Contactar Dependencia"
-      ]
-    },
-    {
-      "name": "F1: Gabinete Inicial",
-      "dates": "19 MAY-30 JUN",
-      "status": "Pendiente",
-      "tasks": [
-        "Analizar MIR y ROP",
-        "Datos estadísticos",
-        "Entregable E1"
-      ]
-    },
-    {
-      "name": "F2: Trabajo de Campo",
-      "dates": "1-31 JUL",
-      "status": "Pendiente",
-      "tasks": [
-        "Entrevistas",
-        "Reunión inicial",
-        "Entregable E2"
-      ]
-    },
-    {
-      "name": "F3: Análisis Integral",
-      "dates": "1 AGO-17 SEP",
-      "status": "Pendiente",
-      "tasks": [
-        "Temas II-V",
-        "FODA",
-        "ASM",
-        "Entregable E3"
-      ]
-    },
-    {
-      "name": "F4: Cierre",
-      "dates": "18 SEP-23 NOV",
-      "status": "Pendiente",
-      "tasks": [
-        "Subsanar obs.",
-        "Informe final E4"
-      ]
-    }
-  ]
+    "lastTask": "📋 Plan detallado 2E207C1 listo. Esperando documentos para FASE 1."
+  }
 }
