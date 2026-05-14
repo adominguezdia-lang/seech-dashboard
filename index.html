@@ -185,10 +185,10 @@
   <h1>Dashboard Abril</h1>
   <p>Ingresa tu PIN para ver el dashboard</p>
   <div class="pin-input" id="pinContainer">
-    <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric" autofocus>
-    <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
-    <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
-    <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off" autofocus>
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off">
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off">
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off">
   </div>
   <div class="error" id="pinError"></div>
   <button onclick="checkPin()">Entrar →</button>
@@ -207,7 +207,7 @@ const DATA_URL = 'data.json';
 const pinInputs = document.querySelectorAll('#pinContainer input');
 pinInputs.forEach((input, i) => {
   input.addEventListener('input', () => {
-    input.value = input.value.replace(/[^0-9]/g, '');
+    input.value = input.value.replace(/[^A-Za-z0-9]/g, '');
     if (input.value && i < 3) pinInputs[i+1].focus();
   });
   input.addEventListener('keydown', (e) => {
