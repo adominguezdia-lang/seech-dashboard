@@ -182,7 +182,7 @@
 <div id="loginCell">
 <div id="loginScreen">
   <div class="avatar"><img src="abril_face.png" alt=""></div>
-  <h1 id="projectTitle">Dashboard</h1>
+  <h1>Dashboard</h1>
   <p>Ingresa tu PIN para ver el dashboard</p>
   <div class="pin-input" id="pinContainer">
     <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric" autofocus>
@@ -271,7 +271,7 @@ function render(data) {
   
   const badge = '<span class="status-badge ' + (data.pipeline?.status === 'working' ? 'status-working' : 'status-idle') + '">● ' + (data.pipeline?.status === 'working' ? 'Procesando' : 'Inactivo') + '</span>';
   
-  let html = '<div class="header"><div class="header-left"><div class="avatar-sm"><img src="abril_face.png" alt=""></div><div class="header-text"><h1>SEECH 2026</h1><div class="subtitle">por Abril · ' + formatDate(data.lastUpdate) + '</div></div></div>' + badge + '</div>';
+  let html = '<div class="header"><div class="header-left"><div class="avatar-sm"><img src="abril_face.png" alt=""></div><div class="header-text"><h1>'+ (data.project || 'Dashboard') + '</h1><div class="subtitle">por Abril · ' + formatDate(data.lastUpdate) + '</div></div></div>' + badge + '</div>';
   
   if (data.stats) {
     html += '<div class="stats-grid"><div class="stat-card"><div class="stat-number">' + data.stats.totalDocuments + '</div><div class="stat-label">Documentos</div></div><div class="stat-card"><div class="stat-number">' + data.stats.processedToday + '</div><div class="stat-label">Hoy</div></div><div class="stat-card"><div class="stat-number">' + data.stats.pendingProcessing + '</div><div class="stat-label">Pendientes</div></div></div>';
