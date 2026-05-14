@@ -263,41 +263,67 @@ async function fetchData() {
   }
 }
 
+
 function render(data) {
   if (!data) {
-    document.getElementById('dashboard').innerHTML = '<div class="error-msg"><br><br>No pude cargar el dashboard<br><small>intenta recargar la página</small></div>';
+    document.getElementById('dashboard').innerHTML = '<div class="error-msg"><br><br>No pude cargar el dashboard<br><small>intenta recargar la p&aacute;gina</small></div>';
     return;
   }
   
-  const badge = '<span class="status-badge ' + (data.pipeline?.status === 'working' ? 'status-working' : 'status-idle') + '">● ' + (data.pipeline?.status === 'working' ? 'Procesando' : 'Inactivo') + '</span>';
+  const projs = data.projects || [];
+  const activeCount = projs.filter(p => p.status === 'active').length;
+  const pendingCount = projs.reduce((sum, p) => sum + (p.phases ? p.phases.filter(f => f.status === 'pending').length : 0), 0);
   
-  let html = '<div class="header"><div class="header-left"><div class="avatar-sm"><img src="abril_face.png" alt=""></div><div class="header-text"><h1>'+ (data.project || 'Dashboard') + '</h1><div class="subtitle">por Abril · ' + formatDate(data.lastUpdate) + '</div></div></div>' + badge + '</div>';
+  let h = '<div class="header"><div class="header-left"><div class="avatar-sm"><img src="abril_face.png" alt=""></div><div class="header-text"><h1>' + (data.dashboard || 'Dashboard Abril') + '</h1><div class="subtitle">' + (data.lastUpdate || '') + '</div></div></div>' + 
+    (data.pipeline?.status === 'working' ? '<span class="status-badge status-working">● Procesando</span>' : '<span class="status-badge status-idle">● Inactivo</span>') + '</div>';
   
-  if (data.stats) {
-    html += '<div class="stats-grid"><div class="stat-card"><div class="stat-number">' + data.stats.totalDocuments + '</div><div class="stat-label">Documentos</div></div><div class="stat-card"><div class="stat-number">' + data.stats.processedToday + '</div><div class="stat-label">Hoy</div></div><div class="stat-card"><div class="stat-number">' + data.stats.pendingProcessing + '</div><div class="stat-label">Pendientes</div></div></div>';
-  }
+  h += '<div class="stats-grid"><div class="stat-card"><div class="stat-number">' + projs.length + '</div><div class="stat-label">Proyectos</div></div><div class="stat-card"><div class="stat-number">' + activeCount + '</div><div class="stat-label">Activos</div></div><div class="stat-card"><div class="stat-number">' + pendingCount + '</div><div class="stat-label">Pendientes</div></div></div>';
   
-  html += '<div class="section-title">📂 Proyecto</div>';
-  
-  (data.folders || []).forEach(function(f) {
-    html += '<div class="folder-card"><div class="folder-header"><div class="left"><span class="folder-icon">📁</span><span class="folder-name">' + f.name + '</span><span class="folder-count">' + (f.files||[]).length + '</span></div><a class="folder-link" href="' + f.url + '" target="_blank">Drive →</a></div><div class="file-list">';
-    if ((f.files||[]).length > 0) {
-      f.files.forEach(function(file) {
-        html += '<div class="file-item"><span class="file-icon">📄</span><span class="file-name">' + file.name + '</span><span class="file-meta">' + (file.date||'') + (file.size ? ' · ' + file.size : '') + '</span></div>';
+  projs.forEach(function(p) {
+    const sClass = p.status === 'active' ? 'status-working' : 'status-idle';
+    const sText = p.status === 'active' ? 'Activo' : 'En pausa';
+    const progress = parseInt(p.progress) || 0;
+    
+    h += '<div class="folder-card"><div class="folder-header"><div class="left"><span class="folder-icon">' + (p.emoji || '📁') + '</span><span class="folder-name">' + p.name + '</span><span class="status-badge ' + sClass + '" style="font-size:10px;padding:2px 8px">' + sText + '</span></div>';
+    if (p.driveUrl) h += '<a class="folder-link" href="' + p.driveUrl + '" target="_blank">Drive →</a>';
+    h += '</div>';
+    
+    h += '<div style="padding:4px 14px 0"><div style="background:rgba(255,255,255,0.06);border-radius:10px;height:6px;overflow:hidden"><div style="width:' + progress + '%;background:linear-gradient(90deg,#06b6d4,#34d399);height:100%;border-radius:10px;transition:width 0.5s"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:2px"><span>' + (p.description || '') + '</span><span>' + p.progress + '</span></div></div>';
+    
+    h += '<div class="file-list">';
+    if (p.lastActivity) h += '<div class="file-item"><span class="file-icon">⚡</span><span class="file-name">' + p.lastActivity + '</span></div>';
+    if (p.nextMilestone) h += '<div class="file-item"><span class="file-icon">🎯</span><span class="file-name">' + p.nextMilestone + '</span></div>';
+    
+    if (p.phases && p.phases.length > 0) {
+      h += '<div style="margin-top:8px;font-size:11px;color:#64748b">Fases:</div>';
+      p.phases.forEach(function(f) {
+        const dot = f.status === 'done' ? '🟢' : f.status === 'active' ? '🟡' : '⚪';
+        h += '<div class="file-item"><span style="font-size:10px">' + dot + '</span><span class="file-name" style="font-size:11px">' + f.name + ' <span style="color:#475569">(' + f.dates + ')</span></span></div>';
       });
-    } else {
-      html += '<div class="empty-folder">📭 Vacía</div>';
     }
-    html += '</div></div>';
+    
+    if (p.folders && p.folders.length > 0) {
+      h += '<div style="margin-top:8px">';
+      p.folders.forEach(function(folder) {
+        if (folder.files && folder.files.length > 0) {
+          h += '<div style="margin-bottom:4px;font-size:11px;color:#64748b">📂 ' + folder.name + '</div>';
+          folder.files.forEach(function(file) {
+            h += '<div class="file-item"><span class="file-icon">📄</span><span class="file-name" style="font-size:11px">' + file.name + '</span></div>';
+          });
+        }
+      });
+      h += '</div>';
+    }
+    
+    h += '</div></div>';
   });
   
-  html += '<div class="section-title" style="margin-top:16px">📋 Última actividad</div>';
-  html += '<div class="activity-item"><span class="activity-dot activity-done"></span><span class="activity-text">' + (data.stats?.lastActivity || 'Sin actividad') + '</span></div>';
-  html += '<div class="pipeline-bar ' + (data.pipeline?.status === 'working' ? 'working' : 'idle') + '"><span class="pipeline-icon">' + (data.pipeline?.status === 'working' ? '⚡' : '⏳') + '</span><span class="pipeline-text">' + (data.pipeline?.lastTask || 'Sin actividad reciente') + '</span></div>';
-  html += '<div class="footer"><span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span></div>';
+  h += '<div class="pipeline-bar idle"><span class="pipeline-icon">⏳</span><span class="pipeline-text">' + (data.pipeline?.lastTask || 'Sin actividad reciente') + '</span></div>';
+  h += '<div class="footer"><span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span></div>';
   
-  document.getElementById('dashboard').innerHTML = html;
+  document.getElementById('dashboard').innerHTML = h;
 }
+
 
 async function loadDashboard() {
   document.getElementById('dashboard').innerHTML = '<div class="loading"><br><br>Cargando dashboard...</div>';
