@@ -173,7 +173,7 @@
   .loading { text-align: center; padding: 60px 20px; color: #475569; }
   .error-msg { text-align: center; padding: 40px 20px; color: #2dd4bf; }
   .error-msg small { display: block; margin-top: 10px; color: #475569; font-size: 11px; }
-</style>
+.proj-header{cursor:pointer;user-select:none}.proj-header:active{opacity:0.7}.proj-body{overflow:hidden;transition:max-height 0.3s ease}.proj-body.collapsed{max-height:0!important;padding-top:0!important;padding-bottom:0!important}.proj-arrow{transition:transform 0.3s ease;display:inline-block;font-size:12px;margin-left:auto;flex-shrink:0;color:#64748b;padding-right:4px}.proj-arrow.open{transform:rotate(180deg)}</style>
 </head>
 <body>
 
@@ -284,9 +284,9 @@ function render(data) {
     const sText = p.status === 'active' ? 'Activo' : 'En pausa';
     const progress = parseInt(p.progress) || 0;
     
-    h += '<div class="folder-card"><div class="folder-header"><div class="left"><span class="folder-icon">' + (p.emoji || '📁') + '</span><span class="folder-name">' + p.name + '</span><span class="status-badge ' + sClass + '" style="font-size:10px;padding:2px 8px">' + sText + '</span></div>';
-    if (p.driveUrl) h += '<a class="folder-link" href="' + p.driveUrl + '" target="_blank">Drive →</a>';
-    h += '</div>';
+    h += '<div class="folder-card"><div class="folder-header proj-header" onclick="toggleProj(this)"><div class="left"><span class="folder-icon">' + (p.emoji || '📁') + '</span><span class="folder-name">' + p.name + '</span><span class="status-badge ' + sClass + '" style="font-size:10px;padding:2px 8px">' + sText + '</span></div>';
+    if (p.driveUrl) h += '<a class="folder-link" href="' + p.driveUrl + '" target="_blank" onclick="event.stopPropagation()">Drive →</a>';
+    h += '<span class="proj-arrow open">▾</span></div>';
     
     h += '<div style="padding:4px 14px 0"><div style="background:rgba(255,255,255,0.06);border-radius:10px;height:6px;overflow:hidden"><div style="width:' + progress + '%;background:linear-gradient(90deg,#06b6d4,#34d399);height:100%;border-radius:10px;transition:width 0.5s"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:2px"><span>' + (p.description || '') + '</span><span>' + p.progress + '</span></div></div>';
     if (p.driveUrl) h += '<div style="padding:6px 14px 0"><a href="' + p.driveUrl + '" target="_blank" style="display:inline-block;background:rgba(52,211,153,0.1);color:#34d399;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:500">📁 Abrir carpeta Drive →</a></div>';
@@ -316,13 +316,25 @@ function render(data) {
       h += '</div>';
     }
     
-    h += '</div></div>';
+    h += '</div></div></div></div>';
   });
   
   h += '<div class="pipeline-bar idle"><span class="pipeline-icon">⏳</span><span class="pipeline-text">' + (data.pipeline?.lastTask || 'Sin actividad reciente') + '</span></div>';
   h += '<div class="footer"><span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span></div>';
   
   document.getElementById('dashboard').innerHTML = h;
+}
+
+
+
+function toggleProj(el) {
+  let body = el.parentElement.querySelector('.proj-body');
+  if (!body) body = el.nextElementSibling;
+  while(body && !body.classList || !body.classList.contains('proj-body')) body = body.nextElementSibling;
+  if (!body) return;
+  body.classList.toggle('collapsed');
+  const arrow = el.querySelector('.proj-arrow');
+  if (arrow) arrow.classList.toggle('open');
 }
 
 
