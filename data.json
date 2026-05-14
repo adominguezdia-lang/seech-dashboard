@@ -1,6 +1,6 @@
 {
   "project": "Dashboard Abril",
-  "lastUpdate": "14/05, 08:58 p.m.",
+  "lastUpdate": "14/05, 10:01 p.m.",
   "folders": [
     {
       "name": "Generales",
@@ -45,11 +45,62 @@
     "totalDocuments": 3,
     "processedToday": 1,
     "pendingProcessing": 0,
-    "lastActivity": "Plan de trabajo 2E207C1 elaborado"
+    "lastActivity": "Plan detallado de trabajo generado — 4 fases, 4 entregables"
   },
   "pipeline": {
     "status": "idle",
     "currentTask": null,
-    "lastTask": "✅ Plan de trabajo listo. Pendiente: iniciar análisis de gabinete"
-  }
+    "lastTask": "📋 Plan detallado listo. FASE 0: Preparación (15-18 MAY)"
+  },
+  "phases": [
+    {
+      "name": "F0: Preparación",
+      "dates": "15-18 MAY",
+      "status": "Pendiente",
+      "tasks": [
+        "Validar plan",
+        "Contactar Dependencia"
+      ]
+    },
+    {
+      "name": "F1: Gabinete Inicial",
+      "dates": "19 MAY-30 JUN",
+      "status": "Pendiente",
+      "tasks": [
+        "Analizar MIR y ROP",
+        "Datos estadísticos",
+        "Entregable E1"
+      ]
+    },
+    {
+      "name": "F2: Trabajo de Campo",
+      "dates": "1-31 JUL",
+      "status": "Pendiente",
+      "tasks": [
+        "Entrevistas",
+        "Reunión inicial",
+        "Entregable E2"
+      ]
+    },
+    {
+      "name": "F3: Análisis Integral",
+      "dates": "1 AGO-17 SEP",
+      "status": "Pendiente",
+      "tasks": [
+        "Temas II-V",
+        "FODA",
+        "ASM",
+        "Entregable E3"
+      ]
+    },
+    {
+      "name": "F4: Cierre",
+      "dates": "18 SEP-23 NOV",
+      "status": "Pendiente",
+      "tasks": [
+        "Subsanar obs.",
+        "Informe final E4"
+      ]
+    }
+  ]
 }
