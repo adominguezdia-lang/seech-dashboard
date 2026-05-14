@@ -1,14 +1,24 @@
 {
   "project": "Evaluación SEECH 2026",
-  "lastUpdate": "2026-05-14T13:30:00-06:00",
+  "lastUpdate": "14/05, 01:40 p.m.",
   "folders": [
     {
       "name": "Generales",
       "id": "1y9lKGmCShrse3i3qhsqGnc-6OoqPlnR6",
       "url": "https://drive.google.com/drive/folders/1y9lKGmCShrse3i3qhsqGnc-6OoqPlnR6",
       "files": [
-        {"name": "analisis_estatuto_organico_seech.md", "size": "8.8KB", "date": "14/05/2026", "type": "markdown"},
-        {"name": "analisis_nota_aclaratoria_estatuto_organico.md", "size": "3.4KB", "date": "14/05/2026", "type": "markdown"}
+        {
+          "name": "analisis_estatuto_organico_seech.md",
+          "size": "8.8KB",
+          "date": "14/05/2026",
+          "type": "markdown"
+        },
+        {
+          "name": "analisis_nota_aclaratoria_estatuto_organico.md",
+          "size": "3.4KB",
+          "date": "14/05/2026",
+          "type": "markdown"
+        }
       ]
     },
     {
@@ -26,9 +36,9 @@
   ],
   "stats": {
     "totalDocuments": 2,
-    "processedToday": 2,
+    "processedToday": 0,
     "pendingProcessing": 0,
-    "lastActivity": "Análisis del Estatuto Orgánico SEECH (118 págs)"
+    "lastActivity": "Dashboard configurado en GitHub Pages"
   },
   "pipeline": {
     "status": "idle",
