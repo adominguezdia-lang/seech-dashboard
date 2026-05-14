@@ -328,9 +328,8 @@ function render(data) {
 
 
 function toggleProj(el) {
-  let body = el.parentElement.querySelector('.proj-body');
-  if (!body) body = el.nextElementSibling;
-  while(body && !body.classList || !body.classList.contains('proj-body')) body = body.nextElementSibling;
+  let body = el.nextElementSibling;
+  while(body && body.nodeType === 1 && !body.classList.contains("proj-body")) body = body.nextElementSibling;
   if (!body) return;
   body.classList.toggle('collapsed');
   const arrow = el.querySelector('.proj-arrow');
