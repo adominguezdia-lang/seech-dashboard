@@ -114,15 +114,7 @@
   .header h1 { font-size: 17px; font-weight: 600; color: #f1f5f9; }
   .header .subtitle { font-size: 12px; color: #64748b; margin-top: 1px; }
   
-  .status-badge {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
+  .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
   .status-idle { background: rgba(76, 175, 80, 0.15); color: #34d399; }
   .status-working {
     background: rgba(251, 191, 36, 0.15); color: #fbbf24;
@@ -236,7 +228,7 @@
   }
 *, *::before, *::after { box-sizing: border-box; }
   @media (max-width: 480px) { .container { padding: 8px; } .header { padding: 12px; } }
-  @media (max-width: 480px) { .header { position: relative; overflow: visible; } .status-badge { position: relative !important; right: auto !important; top: auto !important; margin-left: auto; } .header-top { display: flex; align-items: center; justify-content: space-between;  flex-wrap: wrap; gap: 8px; } }
+  @media (max-width: 480px) { .header { position: relative; overflow: visible; } .status-badge { margin-left: auto; flex-shrink: 0; } .header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-right: 4px; } }
   </style>
 </head>
 <body>
