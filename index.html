@@ -296,9 +296,14 @@ function render(data) {
     
     if (p.phases && p.phases.length > 0) {
       h += '<div style="margin-top:8px;font-size:11px;color:#64748b">Fases:</div>';
-      p.phases.forEach(function(f) {
-        const dot = f.status === 'done' ? '🟢' : f.status === 'active' ? '🟡' : '⚪';
-        h += '<div class="file-item"><span style="font-size:10px">' + dot + '</span><span class="file-name" style="font-size:11px">' + f.name + ' <span style="color:#475569">(' + f.dates + ')</span></span></div>';
+      p.phases.forEach(function(f, fi) {
+        const key = p.id + '_phase_' + fi;
+        const saved = localStorage.getItem(key);
+        const actualStatus = saved || f.status;
+        if (actualStatus === 'done') return;
+        const dot = actualStatus === 'done' ? '🟢' : actualStatus === 'active' ? '🟡' : '⚪';
+        const click = 'style="cursor:pointer;font-size:16px" onclick="donePhase(\'' + p.id + '\',' + fi + ')" title="Marcar como completada"';
+        h += '<div class="file-item" id="phase_' + p.id + '_' + fi + '"><span ' + click + '>' + dot + '</span><span class="file-name" style="font-size:11px">' + f.name + ' <span style="color:#475569">(' + f.dates + ')</span></span></div>';
       });
     }
     
@@ -341,6 +346,36 @@ async function loadDashboard() {
   const data = await fetchData();
   render(data);
 }
+
+function donePhase(projId, phaseIdx) {
+  const key = projId + '_phase_' + phaseIdx;
+  localStorage.setItem(key, 'done');
+  const el = document.getElementById('phase_' + projId + '_' + phaseIdx);
+  if (el) {
+    el.style.transition = 'opacity 0.4s, height 0.4s, margin 0.4s, padding 0.4s';
+    el.style.opacity = '0';
+    el.style.height = '0';
+    el.style.margin = '0';
+    el.style.padding = '0';
+    el.style.overflow = 'hidden';
+    setTimeout(function() {
+      el.remove();
+      const pending = document.querySelectorAll('.file-item[id^="phase_"]').length;
+      const counter = document.querySelector('.stat-card:nth-child(3) .stat-number');
+      if (counter) counter.textContent = pending;
+      if (pending === 0) {
+        const dash = document.getElementById('dashboard');
+        if (dash) {
+          const msg = document.createElement('div');
+          msg.style.cssText = 'text-align:center;padding:30px 14px;color:#34d399;font-size:16px';
+          msg.innerHTML = '🎯 ¡Todo completado!<br><small style="color:#475569">Avísame si hay más proyectos que agregar</small>';
+          dash.appendChild(msg);
+        }
+      }
+    }, 450);
+  }
+}
+
 </script>
 </body>
 </html>
