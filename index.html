@@ -8,7 +8,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
+  body { overflow-x: hidden; max-width: 100vw; 
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background: #0f172a;
     color: #cbd5e1;
@@ -89,10 +89,10 @@
   }
 
   /* DASHBOARD */
-  .container { max-width: 600px; margin: 0 auto; padding: 12px; width: 100%; box-sizing: border-box;  }
+  .container { max-width: 100%; overflow-x: hidden;  margin: 0 auto; padding: 12px; width: 100%; box-sizing: border-box;  }
   
   .header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 20px; padding: 4px 0 16px 0; border-bottom: 1px solid rgba(6, 182, 212, 0.15); }
-  .header-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; width: 100%; } .badge-cell { text-align: right; }  .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+  .header-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; width: 100%; max-width: 100%; box-sizing: border-box; } .badge-cell { text-align: right; }  .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
   .avatar-sm {
     width: 40px; height: 40px;
     background: linear-gradient(135deg, #06b6d4, #34d399);
@@ -140,7 +140,7 @@
     margin-bottom: 10px;
     overflow: hidden;
   }
-  .folder-header {
+  .folder-header { max-width: 100%; box-sizing: border-box; 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -152,7 +152,7 @@
   .folder-name { font-size: 14px; font-weight: 500; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .folder-count { font-size: 11px; color: #64748b; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
   .folder-link { font-size: 11px; color: #34d399; text-decoration: none; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
-  .file-list { padding: 6px 14px 12px; }
+  .file-list { padding: 6px 14px 12px; max-width: 100%; box-sizing: border-box; }
   .file-item { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 6px; font-size: 13px; min-width: 0; }
   .file-icon { color: #34d399; font-size: 13px; }
   .file-name { color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
