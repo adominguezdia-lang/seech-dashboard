@@ -201,6 +201,7 @@
 
 <script>
 const CORRECT_PIN = '12515112';
+let showCompletedProjects = false;
 const DATA_URL = 'data.json';
 
 // PIN inputs
@@ -277,9 +278,10 @@ function render(data) {
   let h = '<div class="header"><div class="header-left"><div class="avatar-sm"><img src="abril_face.png" alt=""></div><div class="header-text"><h1>' + (data.dashboard || 'Dashboard Abril') + '</h1><div class="subtitle">' + (data.lastUpdate || '') + '</div></div></div>' + 
     (data.pipeline?.status === 'working' ? '<span class="status-badge status-working">● Procesando</span>' : '<span class="status-badge status-idle">● Inactivo</span>') + '</div>';
   
-  h += '<div class="stats-grid"><div class="stat-card"><div class="stat-number">' + projs.length + '</div><div class="stat-label">Proyectos</div></div><div class="stat-card"><div class="stat-number">' + activeCount + '</div><div class="stat-label">Activos</div></div><div class="stat-card"><div class="stat-number">' + pendingCount + '</div><div class="stat-label">Pendientes</div></div></div>';
+  let visibleProjs = projs.filter(p => showCompletedProjects || (localStorage.getItem(p.id + '_done') !== 'done' && p.status !== 'done'));
+  h += '<div class="stats-grid"><div class="stat-card"><div class="stat-number">' + visibleProjs.length + '</div><div class="stat-label">Proyectos</div></div><div class="stat-card"><div class="stat-number">' + activeCount + '</div><div class="stat-label">Activos</div></div><div class="stat-card"><div class="stat-number">' + pendingCount + '</div><div class="stat-label">Pendientes</div></div></div>';
   
-  projs.forEach(function(p) {
+  projs.filter(p => showCompletedProjects || (localStorage.getItem(p.id + '_done') !== 'done' && p.status !== 'done')).forEach(function(p) {
     const sClass = p.status === 'active' ? 'status-working' : 'status-idle';
     const sText = p.status === 'active' ? 'Activo' : 'En pausa';
     const progress = parseInt(p.progress) || 0;
@@ -289,6 +291,12 @@ function render(data) {
     h += '<span class="proj-arrow open">▾</span></div>';
     h += '<div class="proj-body"><div style="padding:4px 14px 0"><div style="background:rgba(255,255,255,0.06);border-radius:10px;height:6px;overflow:hidden"><div style="width:' + progress + '%;background:linear-gradient(90deg,#06b6d4,#34d399);height:100%;border-radius:10px;transition:width 0.5s"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:2px"><span>' + (p.description || '') + '</span><span>' + p.progress + '</span></div></div>';
     if (p.driveUrl) h += '<div style="padding:6px 14px 0"><a href="' + p.driveUrl + '" target="_blank" style="display:inline-block;background:rgba(52,211,153,0.1);color:#34d399;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:500">📁 Abrir carpeta Drive →</a></div>';
+    
+    const isDoneKey = p.id + '_done';
+    const isDone = localStorage.getItem(isDoneKey) === 'done' || p.status === 'done';
+    if (!isDone) {
+      h += '<div style="padding:6px 14px 0"><a onclick="doneProject(\'' + p.id + '\')" style="display:inline-block;background:rgba(239,68,68,0.12);color:#ef4444;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer">✅ Marcar completado y ocultar</a></div>';
+    }
     
     h += '<div class="file-list">';
     if (p.lastActivity) h += '<div class="file-item"><span class="file-icon">⚡</span><span class="file-name">' + p.lastActivity + '</span></div>';
@@ -324,7 +332,10 @@ function render(data) {
   });
   
   h += '<div class="pipeline-bar idle"><span class="pipeline-icon">⏳</span><span class="pipeline-text">' + (data.pipeline?.lastTask || 'Sin actividad reciente') + '</span></div>';
-  h += '<div class="footer"><span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span></div>';
+  h += '<div class="footer">';
+  h += '<span class="refresh-hint" onclick="toggleCompleted()" style="cursor:pointer">👁️ ' + (showCompletedProjects ? 'Ocultar completados' : 'Mostrar completados') + '</span>';
+  h += '<br><br><span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span>';
+  h += '</div>';
   
   document.getElementById('dashboard').innerHTML = h;
 }
@@ -341,6 +352,16 @@ function toggleProj(el) {
 }
 
 
+
+function doneProject(projId) {
+  localStorage.setItem(projId + '_done', 'done');
+  loadDashboard();
+}
+
+function toggleCompleted() {
+  showCompletedProjects = !showCompletedProjects;
+  loadDashboard();
+}
 async function loadDashboard() {
   document.getElementById('dashboard').innerHTML = '<div class="loading"><br><br>Cargando dashboard...</div>';
   const data = await fetchData();
