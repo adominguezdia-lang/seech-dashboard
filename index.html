@@ -92,7 +92,7 @@
   .container { max-width: 600px; margin: 0 auto; padding: 12px; width: 100%; box-sizing: border-box;  }
   
   .header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 20px; padding: 4px 0 16px 0; border-bottom: 1px solid rgba(6, 182, 212, 0.15); }
-  .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+  .header-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; width: 100%; } .badge-cell { text-align: right; }  .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
   .avatar-sm {
     width: 40px; height: 40px;
     background: linear-gradient(135deg, #06b6d4, #34d399);
@@ -362,6 +362,7 @@ function render(data) {
   
   document.getElementById('app').innerHTML = `
     <div class="header">
+      <div class="header-row">
       <div class="header-left">
         <div class="avatar-sm"><img src="abril_face.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div>
         <div>
@@ -369,7 +370,8 @@ function render(data) {
           <div class="subtitle">por Abril · ${formatDate(data.lastUpdate)}</div>
         </div>
       </div>
-      ${badge}
+      <div class="badge-cell">${badge}</div>
+      </div>
     </div>
     ${stats}
     <div class="section-title">📂 Proyecto</div>
