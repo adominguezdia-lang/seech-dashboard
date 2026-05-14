@@ -4,7 +4,7 @@
   "stats": {
     "totalProjects": 3,
     "activeProjects": 2,
-    "pendingTasks": 8,
+    "pendingTasks": 5,
     "completedToday": 1
   },
   "projects": [
@@ -99,11 +99,11 @@
       "id": "sicip",
       "name": "SICIP Chihuahua",
       "emoji": "🏛️",
-      "status": "paused",
-      "progress": "40%",
-      "lastActivity": "API AjaxPro descubierta — pendiente getData",
+      "status": "done",
+      "progress": "100%",
+      "lastActivity": "✅ Sitio bloqueado por IP. La info se solicita directo a la Dependencia.",
       "description": "Extracción de datos PAE 2026 del portal SICIP",
-      "nextMilestone": "Obtener registros de Fuentes de Información PAE 2026",
+      "nextMilestone": "Completado",
       "driveUrl": null,
       "folders": []
     },
