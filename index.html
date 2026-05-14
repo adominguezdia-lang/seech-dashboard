@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Abril 🌷 - Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  html, body {
+    height: 100%;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0f172a;
+    color: #cbd5e1;
+  }
+  
+  /* Login - centrado vertical con table-cell */
+  #loginWrap {
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+  #loginCell {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 20px;
+  }
+  #loginScreen {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  #loginScreen .avatar {
+    width: 72px; height: 72px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #06b6d4, #34d399);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+  }
+  #loginScreen .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  #loginScreen h1 { font-size: 22px; color: #f1f5f9; margin-bottom: 6px; }
+  #loginScreen p { font-size: 13px; color: #64748b; margin-bottom: 28px; }
+  #loginScreen .pin-input {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  #loginScreen .pin-input input {
+    width: 48px; height: 56px;
+    background: #1e293b;
+    border: 2px solid #2dd4bf;
+    border-radius: 8px;
+    color: #f1f5f9;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    caret-color: #2dd4bf;
+  }
+  #loginScreen .error { color: #2dd4bf; font-size: 13px; min-height: 20px; margin-bottom: 12px; }
+  #loginScreen button {
+    background: linear-gradient(135deg, #06b6d4, #34d399);
+    color: #0f172a;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .wrong { animation: shake 0.4s ease-in-out; }
+
+  /* Dashboard */
+  #dashboard {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 12px;
+    overflow-x: hidden;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 4px 0 16px 0;
+    border-bottom: 1px solid rgba(6, 182, 212, 0.15);
+    gap: 8px;
+  }
+  .header-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .avatar-sm {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 50%; overflow: hidden;
+    background: linear-gradient(135deg, #06b6d4, #34d399);
+  }
+  .avatar-sm img { width: 100%; height: 100%; object-fit: cover; }
+  .header-text { min-width: 0; }
+  .header-text h1 { font-size: 17px; font-weight: 600; color: #f1f5f9; }
+  .header-text .subtitle { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .status-badge {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .status-idle { background: rgba(76,175,80,0.15); color: #34d399; }
+  .status-working { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 16px 8px;
+    text-align: center;
+  }
+  .stat-number { font-size: 28px; font-weight: 700; color: #34d399; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: #64748b; }
+
+  .section-title { font-size: 14px; font-weight: 600; color: #94a3b8; margin-bottom: 12px; }
+
+  .folder-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .folder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .folder-header .left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .folder-icon { font-size: 18px; flex-shrink: 0; }
+  .folder-name { font-size: 14px; font-weight: 500; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .folder-count { font-size: 11px; color: #64748b; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+  .folder-link { font-size: 11px; color: #34d399; text-decoration: none; flex-shrink: 0; }
+  .file-list { padding: 6px 14px 12px; }
+  .file-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; }
+  .file-icon { color: #34d399; font-size: 13px; flex-shrink: 0; }
+  .file-name { color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; font-size: 13px; flex: 1; }
+  .file-meta { color: #475569; font-size: 10px; flex-shrink: 0; }
+  .empty-folder { padding: 10px; color: #334155; font-size: 12px; font-style: italic; text-align: center; }
+
+  .activity-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-bottom: 6px; font-size: 12px; }
+  .activity-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .activity-done { background: #34d399; }
+  .activity-text { flex: 1; color: #94a3b8; }
+
+  .pipeline-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-top: 14px; font-size: 12px; }
+  .pipeline-bar.idle { border-left: 3px solid #34d399; }
+  .pipeline-icon { font-size: 16px; }
+  .pipeline-text { flex: 1; color: #94a3b8; }
+
+  .footer { margin-top: 30px; text-align: center; font-size: 11px; color: #1e293b; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .refresh-hint { display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.04); border-radius: 20px; font-size: 10px; color: #475569; }
+  .loading { text-align: center; padding: 60px 20px; color: #475569; }
+  .error-msg { text-align: center; padding: 40px 20px; color: #2dd4bf; }
+  .error-msg small { display: block; margin-top: 10px; color: #475569; font-size: 11px; }
+.proj-header{cursor:pointer;user-select:none}.proj-header:active{opacity:0.7}.proj-body{overflow:hidden;transition:max-height 0.3s ease}.proj-body.collapsed{max-height:0!important;padding-top:0!important;padding-bottom:0!important}.proj-arrow{transition:transform 0.3s ease;display:inline-block;font-size:12px;margin-left:auto;flex-shrink:0;color:#64748b;padding-right:4px}.proj-arrow.open{transform:rotate(180deg)}</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN (table-cell centering - works on all iOS) -->
+<div id="loginWrap">
+<div id="loginCell">
+<div id="loginScreen">
+  <div class="avatar"><img src="abril_face.png" alt=""></div>
+  <h1>Dashboard Abril</h1>
+  <p>Ingresa tu PIN para ver el dashboard</p>
+  <div class="pin-input" id="pinContainer">
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off" autofocus>
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off">
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off">
+    <input type="text" maxlength="1" pattern="[A-Za-z0-9]" autocomplete="off">
+  </div>
+  <div class="error" id="pinError"></div>
+  <button onclick="checkPin()">Entrar →</button>
+</div>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none"></div>
+
+<script>
+const CORRECT_PIN = '12515112';
+const DATA_URL = 'data.json';
+
+// PIN inputs
+const pinInputs = document.querySelectorAll('#pinContainer input');
+pinInputs.forEach((input, i) => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/[^A-Za-z0-9]/g, '');
+    if (input.value && i < 3) pinInputs[i+1].focus();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !input.value && i > 0) pinInputs[i-1].focus();
+    if (e.key === 'Enter') checkPin();
+  });
+});
+
+function getPin() { return Array.from(pinInputs).map(i => i.value).join(''); }
+
+function checkPin() {
+  if (getPin() === CORRECT_PIN) {
+    localStorage.setItem('seech_auth', '1');
+    showDashboard();
+  } else {
+    document.getElementById('pinError').textContent = 'PIN incorrecto';
+    document.getElementById('loginScreen').parentElement.parentElement.classList.add('wrong');
+    setTimeout(() => {
+      document.getElementById('loginScreen').parentElement.parentElement.classList.remove('wrong');
+    }, 500);
+    pinInputs.forEach(i => { i.value = ''; });
+    pinInputs[0].focus();
+  }
+}
+
+// Auto-login if PIN cached
+if (localStorage.getItem('seech_auth') === '1') {
+  showDashboard();
+}
+
+function showDashboard() {
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadDashboard();
+}
+
+function formatDate(iso) {
+  if (!iso) return '';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString('es-MX', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', timeZone: 'America/Mexico_City' });
+  } catch(e) { return iso; }
+}
+
+async function fetchData() {
+  try {
+    const r = await fetch(DATA_URL + '?_t=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return await r.json();
+  } catch(e) {
+    console.error('Fetch error:', e);
+    return null;
+  }
+}
+
+
+function render(data) {
+  if (!data) {
+    document.getElementById('dashboard').innerHTML = '<div class="error-msg"><br><br>No pude cargar el dashboard<br><small>intenta recargar la p&aacute;gina</small></div>';
+    return;
+  }
+  
+  const projs = data.projects || [];
+  const activeCount = projs.filter(p => p.status === 'active').length;
+  const pendingCount = projs.reduce((sum, p) => sum + (p.phases ? p.phases.filter(f => f.status === 'pending').length : 0), 0);
+  
+  let h = '<div class="header"><div class="header-left"><div class="avatar-sm"><img src="abril_face.png" alt=""></div><div class="header-text"><h1>' + (data.dashboard || 'Dashboard Abril') + '</h1><div class="subtitle">' + (data.lastUpdate || '') + '</div></div></div>' + 
+    (data.pipeline?.status === 'working' ? '<span class="status-badge status-working">● Procesando</span>' : '<span class="status-badge status-idle">● Inactivo</span>') + '</div>';
+  
+  h += '<div class="stats-grid"><div class="stat-card"><div class="stat-number">' + projs.length + '</div><div class="stat-label">Proyectos</div></div><div class="stat-card"><div class="stat-number">' + activeCount + '</div><div class="stat-label">Activos</div></div><div class="stat-card"><div class="stat-number">' + pendingCount + '</div><div class="stat-label">Pendientes</div></div></div>';
+  
+  projs.forEach(function(p) {
+    const sClass = p.status === 'active' ? 'status-working' : 'status-idle';
+    const sText = p.status === 'active' ? 'Activo' : 'En pausa';
+    const progress = parseInt(p.progress) || 0;
+    
+    h += '<div class="folder-card"><div class="folder-header proj-header" onclick="toggleProj(this)"><div class="left"><span class="folder-icon">' + (p.emoji || '📁') + '</span><span class="folder-name">' + p.name + '</span><span class="status-badge ' + sClass + '" style="font-size:10px;padding:2px 8px">' + sText + '</span></div>';
+    if (p.driveUrl) h += '<a class="folder-link" href="' + p.driveUrl + '" target="_blank" onclick="event.stopPropagation()">Drive →</a>';
+    h += '<span class="proj-arrow open">▾</span></div>';
+    h += '<div class="proj-body"><div style="padding:4px 14px 0"><div style="background:rgba(255,255,255,0.06);border-radius:10px;height:6px;overflow:hidden"><div style="width:' + progress + '%;background:linear-gradient(90deg,#06b6d4,#34d399);height:100%;border-radius:10px;transition:width 0.5s"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:2px"><span>' + (p.description || '') + '</span><span>' + p.progress + '</span></div></div>';
+    if (p.driveUrl) h += '<div style="padding:6px 14px 0"><a href="' + p.driveUrl + '" target="_blank" style="display:inline-block;background:rgba(52,211,153,0.1);color:#34d399;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:500">📁 Abrir carpeta Drive →</a></div>';
+    
+    h += '<div class="file-list">';
+    if (p.lastActivity) h += '<div class="file-item"><span class="file-icon">⚡</span><span class="file-name">' + p.lastActivity + '</span></div>';
+    if (p.nextMilestone) h += '<div class="file-item"><span class="file-icon">🎯</span><span class="file-name">' + p.nextMilestone + '</span></div>';
+    
+    if (p.phases && p.phases.length > 0) {
+      h += '<div style="margin-top:8px;font-size:11px;color:#64748b">Fases:</div>';
+      p.phases.forEach(function(f) {
+        const dot = f.status === 'done' ? '🟢' : f.status === 'active' ? '🟡' : '⚪';
+        h += '<div class="file-item"><span style="font-size:10px">' + dot + '</span><span class="file-name" style="font-size:11px">' + f.name + ' <span style="color:#475569">(' + f.dates + ')</span></span></div>';
+      });
+    }
+    
+    if (p.folders && p.folders.length > 0) {
+      h += '<div style="margin-top:8px">';
+      p.folders.forEach(function(folder) {
+        if (folder.files && folder.files.length > 0) {
+          h += '<div style="margin-bottom:4px;font-size:11px;color:#64748b">📂 ' + folder.name + '</div>';
+          folder.files.forEach(function(file) {
+            h += '<div class="file-item"><span class="file-icon">📄</span><span class="file-name" style="font-size:11px">' + file.name + '</span></div>';
+          });
+        }
+      });
+      h += '</div>';
+    }
+    
+    h += '</div></div></div></div>';
+  });
+  
+  h += '<div class="pipeline-bar idle"><span class="pipeline-icon">⏳</span><span class="pipeline-text">' + (data.pipeline?.lastTask || 'Sin actividad reciente') + '</span></div>';
+  h += '<div class="footer"><span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span></div>';
+  
+  document.getElementById('dashboard').innerHTML = h;
+}
+
+
+
+function toggleProj(el) {
+  let body = el.nextElementSibling;
+  while(body && body.nodeType === 1 && !body.classList.contains("proj-body")) body = body.nextElementSibling;
+  if (!body) return;
+  body.classList.toggle('collapsed');
+  const arrow = el.querySelector('.proj-arrow');
+  if (arrow) arrow.classList.toggle('open');
+}
+
+
+async function loadDashboard() {
+  document.getElementById('dashboard').innerHTML = '<div class="loading"><br><br>Cargando dashboard...</div>';
+  const data = await fetchData();
+  render(data);
+}
+</script>
+</body>
+</html>
