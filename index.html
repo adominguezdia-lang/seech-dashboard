@@ -289,6 +289,7 @@ function render(data) {
     h += '</div>';
     
     h += '<div style="padding:4px 14px 0"><div style="background:rgba(255,255,255,0.06);border-radius:10px;height:6px;overflow:hidden"><div style="width:' + progress + '%;background:linear-gradient(90deg,#06b6d4,#34d399);height:100%;border-radius:10px;transition:width 0.5s"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:2px"><span>' + (p.description || '') + '</span><span>' + p.progress + '</span></div></div>';
+    if (p.driveUrl) h += '<div style="padding:6px 14px 0"><a href="' + p.driveUrl + '" target="_blank" style="display:inline-block;background:rgba(52,211,153,0.1);color:#34d399;text-decoration:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:500">📁 Abrir carpeta Drive →</a></div>';
     
     h += '<div class="file-list">';
     if (p.lastActivity) h += '<div class="file-item"><span class="file-icon">⚡</span><span class="file-name">' + p.lastActivity + '</span></div>';
