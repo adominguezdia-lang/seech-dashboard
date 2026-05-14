@@ -3,59 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Abril <img src="abril_face.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover"> - SEECH Dashboard</title>
+<title>Abril 🌷 - SEECH Dashboard</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-  
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: "Inter", system-ui, -apple-system, sans-serif; background: #0f172a; color: #cbd5e1; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; margin: 0; }
-
-  /* LOGIN SCREEN */
-  #loginScreen { margin: auto; 
-    text-align: center;
-    padding: 40px 30px;
+  
+  html, body {
+    height: 100%;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0f172a;
+    color: #cbd5e1;
+  }
+  
+  /* Login - centrado vertical con table-cell */
+  #loginWrap {
+    display: table;
     width: 100%;
-    max-width: 350px;
+    height: 100%;
+    text-align: center;
+  }
+  #loginCell {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 20px;
+  }
+  #loginScreen {
+    max-width: 320px;
+    margin: 0 auto;
   }
   #loginScreen .avatar {
-    width: 80px; height: 80px;
-    background: linear-gradient(135deg, #06b6d4, #34d399);
+    width: 72px; height: 72px;
+    margin: 0 auto 16px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    margin: 0 auto 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #06b6d4, #34d399);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
   }
-  #loginScreen h1 { font-size: 22px; margin-bottom: 6px; color: #f1f5f9; }
-  #loginScreen p { font-size: 13px; color: #64748b; margin-bottom: 30px; }
+  #loginScreen .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  #loginScreen h1 { font-size: 22px; color: #f1f5f9; margin-bottom: 6px; }
+  #loginScreen p { font-size: 13px; color: #64748b; margin-bottom: 28px; }
   #loginScreen .pin-input {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     justify-content: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
   #loginScreen .pin-input input {
-    width: 50px; height: 60px;
-    background: rgba(255,255,255,0.06);
-    border: 2px solid rgba(232,167,167,0.2);
-    border-radius: 12px;
+    width: 48px; height: 56px;
+    background: #1e293b;
+    border: 2px solid #2dd4bf;
+    border-radius: 8px;
     color: #f1f5f9;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
     text-align: center;
     outline: none;
-    transition: border-color 0.2s;
+    caret-color: #2dd4bf;
   }
-  #loginScreen .pin-input input:focus {
-    border-color: #34d399;
-  }
-  #loginScreen .error {
-    color: #2dd4bf;
-    font-size: 13px;
-    min-height: 20px;
-    margin-bottom: 15px;
-  }
+  #loginScreen .error { color: #2dd4bf; font-size: 13px; min-height: 20px; margin-bottom: 12px; }
   #loginScreen button {
     background: linear-gradient(135deg, #06b6d4, #34d399);
     color: #0f172a;
@@ -65,166 +70,122 @@
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
   }
-  #loginScreen button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(232,167,167,0.3);
-  }
-  #loginScreen .wrong {
-    animation: shake 0.4s ease-in-out;
-  }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    75% { transform: translateX(8px); }
-  }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .wrong { animation: shake 0.4s ease-in-out; }
 
-  /* DASHBOARD */
-  .container { margin: 0 auto; max-width: 600px; width: 100%; padding: 12px; box-sizing: border-box; }
+  /* Dashboard */
+  #dashboard {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 12px;
+    overflow-x: hidden;
+  }
   
-  .header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 20px; padding: 4px 0 16px 0; border-bottom: 1px solid rgba(6, 182, 212, 0.15); }
-  .header-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; width: 100%; max-width: 100%; box-sizing: border-box; } .badge-cell { text-align: right; }  .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
-  .avatar-sm {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, #06b6d4, #34d399);
-    border-radius: 50%;
+  .header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: #0f172a;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 4px 0 16px 0;
+    border-bottom: 1px solid rgba(6, 182, 212, 0.15);
+    gap: 8px;
+  }
+  .header-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .avatar-sm {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 50%; overflow: hidden;
+    background: linear-gradient(135deg, #06b6d4, #34d399);
+  }
+  .avatar-sm img { width: 100%; height: 100%; object-fit: cover; }
+  .header-text { min-width: 0; }
+  .header-text h1 { font-size: 17px; font-weight: 600; color: #f1f5f9; }
+  .header-text .subtitle { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .status-badge {
     flex-shrink: 0;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
   }
-  .header h1 { font-size: 17px; font-weight: 600; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .header .subtitle { font-size: 12px; color: #64748b; margin-top: 1px; }
-  
-  .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0; }
-  .status-idle { background: rgba(76, 175, 80, 0.15); color: #34d399; }
-  .status-working {
-    background: rgba(251, 191, 36, 0.15); color: #fbbf24;
-    animation: pulse 1.5s infinite;
-  }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-  
+  .status-idle { background: rgba(76,175,80,0.15); color: #34d399; }
+  .status-working { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 20px;
   }
-  .stat-card { box-sizing: border-box; width: 100%; min-width: 0; overflow: hidden; 
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 14px;
-    padding: 16px 12px;
+    padding: 16px 8px;
     text-align: center;
   }
   .stat-number { font-size: 28px; font-weight: 700; color: #34d399; line-height: 1; margin-bottom: 4px; }
-  .stat-label { font-size: 12px; color: #64748b; font-weight: 500; }
-  
-  .section-title { font-size: 14px; font-weight: 600; color: #94a3b8; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-  
-  .folder-card { box-sizing: border-box; width: 100%; min-width: 0; 
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+  .stat-label { font-size: 12px; color: #64748b; }
+
+  .section-title { font-size: 14px; font-weight: 600; color: #94a3b8; margin-bottom: 12px; }
+
+  .folder-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 12px;
     margin-bottom: 10px;
     overflow: hidden;
   }
-  .folder-header { max-width: 100%; box-sizing: border-box; 
+  .folder-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 12px 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
   }
   .folder-header .left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
-  .folder-icon { font-size: 18px; }
+  .folder-icon { font-size: 18px; flex-shrink: 0; }
   .folder-name { font-size: 14px; font-weight: 500; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .folder-count { font-size: 11px; color: #64748b; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
-  .folder-link { font-size: 11px; color: #34d399; text-decoration: none; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
-  .file-list { padding: 6px 14px 12px; max-width: 100%; box-sizing: border-box; }
-  .file-item { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 6px; font-size: 13px; min-width: 0; }
-  .file-icon { color: #34d399; font-size: 13px; }
-  .file-name { color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
-  .file-meta { color: #475569; font-size: 10px; white-space: nowrap; }
+  .folder-count { font-size: 11px; color: #64748b; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+  .folder-link { font-size: 11px; color: #34d399; text-decoration: none; flex-shrink: 0; }
+  .file-list { padding: 6px 14px 12px; }
+  .file-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; }
+  .file-icon { color: #34d399; font-size: 13px; flex-shrink: 0; }
+  .file-name { color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; font-size: 13px; flex: 1; }
+  .file-meta { color: #475569; font-size: 10px; flex-shrink: 0; }
   .empty-folder { padding: 10px; color: #334155; font-size: 12px; font-style: italic; text-align: center; }
-  
-  .activity-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 10px;
-    margin-bottom: 6px;
-    font-size: 12px;
-  }
+
+  .activity-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-bottom: 6px; font-size: 12px; }
   .activity-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
   .activity-done { background: #34d399; }
-  .activity-pending { background: #fbbf24; }
   .activity-text { flex: 1; color: #94a3b8; }
-  .activity-time { color: #475569; font-size: 10px; white-space: nowrap; }
-  
-  .pipeline-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 14px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 10px;
-    margin-top: 14px;
-    font-size: 12px;
-  }
+
+  .pipeline-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-top: 14px; font-size: 12px; }
   .pipeline-bar.idle { border-left: 3px solid #34d399; }
-  .pipeline-bar.working { border-left: 3px solid #fbbf24; }
   .pipeline-icon { font-size: 16px; }
   .pipeline-text { flex: 1; color: #94a3b8; }
-  
-  .footer {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 11px;
-    color: #1e293b;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255,255,255,0.04);
-  }
-  .refresh-hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 12px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 20px;
-    font-size: 10px;
-    color: #475569;
-  }
+
+  .footer { margin-top: 30px; text-align: center; font-size: 11px; color: #1e293b; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .refresh-hint { display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.04); border-radius: 20px; font-size: 10px; color: #475569; }
   .loading { text-align: center; padding: 60px 20px; color: #475569; }
   .error-msg { text-align: center; padding: 40px 20px; color: #2dd4bf; }
   .error-msg small { display: block; margin-top: 10px; color: #475569; font-size: 11px; }
-
-  
-  @media (max-width: 400px) {
-    body { padding: 0; }
-    .stat-number { font-size: 22px; }
-    .stats-grid { gap: 6px; }
-    .stat-card { padding: 12px 8px; }
-    .folder-name { font-size: 13px; }
-  }
-  @media (max-width: 480px) { .container { padding: 8px; } }
-  @media (max-width: 480px) { .header { padding: 8px 12px 14px 12px !important; } .status-badge { margin-left: auto; flex-shrink: 0; } }
-  </style>
+</style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN SCREEN (table-cell centering - works on all iOS) -->
+<div id="loginWrap">
+<div id="loginCell">
 <div id="loginScreen">
-  <div class="avatar"><img src="abril_face.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div>
+  <div class="avatar"><img src="abril_face.png" alt=""></div>
   <h1>SEECH 2026</h1>
   <p>Ingresa tu PIN para ver el dashboard</p>
   <div class="pin-input" id="pinContainer">
-    <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric" autofocus style="width:48px;height:56px;font-size:24px;text-align:center;border:2px solid #2dd4bf;border-radius:8px;background:#1e293b;color:#f1f5f9;outline:none;caret-color:#2dd4bf">
+    <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric" autofocus>
     <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
     <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
     <input type="password" maxlength="1" pattern="[0-9]" inputmode="numeric">
@@ -232,19 +193,17 @@
   <div class="error" id="pinError"></div>
   <button onclick="checkPin()">Entrar →</button>
 </div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" style="display:none;width:100%;align-self:stretch">
-  <div class="container" id="app"></div>
+</div>
 </div>
 
-<script>
-// ═══════════════════════════════════════
-// 🔒 PIN de acceso (cambiable por Alfredo)
-// ═══════════════════════════════════════
-const CORRECT_PIN = '1251';
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none"></div>
 
-// ======== PIN LOGIN ========
+<script>
+const CORRECT_PIN = '1251';
+const DATA_URL = 'data.json';
+
+// PIN inputs
 const pinInputs = document.querySelectorAll('#pinContainer input');
 pinInputs.forEach((input, i) => {
   input.addEventListener('input', () => {
@@ -257,45 +216,39 @@ pinInputs.forEach((input, i) => {
   });
 });
 
-function getPin() {
-  return Array.from(pinInputs).map(i => i.value).join('');
-}
+function getPin() { return Array.from(pinInputs).map(i => i.value).join(''); }
 
 function checkPin() {
-  const pin = getPin();
-  if (pin === CORRECT_PIN) {
+  if (getPin() === CORRECT_PIN) {
     localStorage.setItem('seech_auth', '1');
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    loadDashboard();
+    showDashboard();
   } else {
-    const err = document.getElementById('pinError');
-    err.textContent = 'PIN incorrecto';
-    document.getElementById('loginScreen').classList.add('wrong');
-    setTimeout(() => document.getElementById('loginScreen').classList.remove('wrong'), 500);
+    document.getElementById('pinError').textContent = 'PIN incorrecto';
+    document.getElementById('loginScreen').parentElement.parentElement.classList.add('wrong');
+    setTimeout(() => {
+      document.getElementById('loginScreen').parentElement.parentElement.classList.remove('wrong');
+    }, 500);
     pinInputs.forEach(i => { i.value = ''; });
     pinInputs[0].focus();
   }
 }
 
-// Check if already authed
+// Auto-login if PIN cached
 if (localStorage.getItem('seech_auth') === '1') {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
+  showDashboard();
 }
 
-// ======== DASHBOARD ========
-const DATA_URL = 'data.json';
+function showDashboard() {
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadDashboard();
+}
 
 function formatDate(iso) {
   if (!iso) return '';
   try {
     const d = new Date(iso);
-    return d.toLocaleString('es-MX', {
-      hour: '2-digit', minute: '2-digit',
-      day: '2-digit', month: '2-digit',
-      timeZone: 'America/Mexico_City'
-    });
+    return d.toLocaleString('es-MX', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', timeZone: 'America/Mexico_City' });
   } catch(e) { return iso; }
 }
 
@@ -312,83 +265,42 @@ async function fetchData() {
 
 function render(data) {
   if (!data) {
-    document.getElementById('app').innerHTML = `
-      <div class="error-msg">
-        <img src="abril_face.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover"><br><br>No pude cargar el dashboard<br>
-        <small>intenta recargar la página</small>
-      </div>`;
+    document.getElementById('dashboard').innerHTML = '<div class="error-msg"><br><br>No pude cargar el dashboard<br><small>intenta recargar la página</small></div>';
     return;
   }
   
-  const badge = `<span class="status-badge ${data.pipeline?.status === 'working' ? 'status-working' : 'status-idle'}">● ${data.pipeline?.status === 'working' ? 'Procesando' : 'Inactivo'}</span>`;
+  const badge = '<span class="status-badge ' + (data.pipeline?.status === 'working' ? 'status-working' : 'status-idle') + '">● ' + (data.pipeline?.status === 'working' ? 'Procesando' : 'Inactivo') + '</span>';
   
-  const stats = data.stats ? `
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-number">${data.stats.totalDocuments}</div><div class="stat-label">Documentos</div></div>
-      <div class="stat-card"><div class="stat-number">${data.stats.processedToday}</div><div class="stat-label">Hoy</div></div>
-      <div class="stat-card"><div class="stat-number">${data.stats.pendingProcessing}</div><div class="stat-label">Pendientes</div></div>
-    </div>
-  ` : '';
+  let html = '<div class="header"><div class="header-left"><div class="avatar-sm"><img src="abril_face.png" alt=""></div><div class="header-text"><h1>SEECH 2026</h1><div class="subtitle">por Abril · ' + formatDate(data.lastUpdate) + '</div></div></div>' + badge + '</div>';
   
-  const folders = (data.folders || []).map(f => `
-    <div class="folder-card">
-      <div class="folder-header">
-        <div class="left">
-          <span class="folder-icon">📁</span>
-          <span class="folder-name">${f.name}</span>
-          <span class="folder-count">${(f.files||[]).length}</span>
-        </div>
-        <a class="folder-link" href="${f.url}" target="_blank">Drive →</a>
-      </div>
-      <div class="file-list">
-        ${(f.files||[]).length > 0 ? f.files.map(file => `
-          <div class="file-item">
-            <span class="file-icon">📄</span>
-            <span class="file-name">${file.name}</span>
-            <span class="file-meta">${file.date || ''} ${file.size ? '· ' + file.size : ''}</span>
-          </div>
-        `).join('') : '<div class="empty-folder">📭 Vacía</div>'}
-      </div>
-    </div>
-  `).join('');
+  if (data.stats) {
+    html += '<div class="stats-grid"><div class="stat-card"><div class="stat-number">' + data.stats.totalDocuments + '</div><div class="stat-label">Documentos</div></div><div class="stat-card"><div class="stat-number">' + data.stats.processedToday + '</div><div class="stat-label">Hoy</div></div><div class="stat-card"><div class="stat-number">' + data.stats.pendingProcessing + '</div><div class="stat-label">Pendientes</div></div></div>';
+  }
   
-  document.getElementById('app').innerHTML = `
-    <div class="header">
-      <div class="header-row">
-      <div class="header-left">
-        <div class="avatar-sm"><img src="abril_face.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div>
-        <div>
-          <h1>SEECH 2026</h1>
-          <div class="subtitle">por Abril · ${formatDate(data.lastUpdate)}</div>
-        </div>
-      </div>
-      <div class="badge-cell">${badge}</div>
-      </div>
-    </div>
-    ${stats}
-    <div class="section-title">📂 Proyecto</div>
-    ${folders}
-    <div class="section-title" style="margin-top:16px">📋 Última actividad</div>
-    <div class="activity-item">
-      <span class="activity-dot activity-done"></span>
-      <span class="activity-text">${data.stats?.lastActivity || 'Sin actividad'}</span>
-    </div>
-    <div class="pipeline-bar ${data.pipeline?.status === 'working' ? 'working' : 'idle'}">
-      <span class="pipeline-icon">${data.pipeline?.status === 'working' ? '⚡' : '⏳'}</span>
-      <span class="pipeline-text">${data.pipeline?.lastTask || 'Sin actividad reciente'}</span>
-    </div>
-    <div class="footer">
-      <span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span>
-    </div>
-  `;
+  html += '<div class="section-title">📂 Proyecto</div>';
+  
+  (data.folders || []).forEach(function(f) {
+    html += '<div class="folder-card"><div class="folder-header"><div class="left"><span class="folder-icon">📁</span><span class="folder-name">' + f.name + '</span><span class="folder-count">' + (f.files||[]).length + '</span></div><a class="folder-link" href="' + f.url + '" target="_blank">Drive →</a></div><div class="file-list">';
+    if ((f.files||[]).length > 0) {
+      f.files.forEach(function(file) {
+        html += '<div class="file-item"><span class="file-icon">📄</span><span class="file-name">' + file.name + '</span><span class="file-meta">' + (file.date||'') + (file.size ? ' · ' + file.size : '') + '</span></div>';
+      });
+    } else {
+      html += '<div class="empty-folder">📭 Vacía</div>';
+    }
+    html += '</div></div>';
+  });
+  
+  html += '<div class="section-title" style="margin-top:16px">📋 Última actividad</div>';
+  html += '<div class="activity-item"><span class="activity-dot activity-done"></span><span class="activity-text">' + (data.stats?.lastActivity || 'Sin actividad') + '</span></div>';
+  html += '<div class="pipeline-bar ' + (data.pipeline?.status === 'working' ? 'working' : 'idle') + '"><span class="pipeline-icon">' + (data.pipeline?.status === 'working' ? '⚡' : '⏳') + '</span><span class="pipeline-text">' + (data.pipeline?.lastTask || 'Sin actividad reciente') + '</span></div>';
+  html += '<div class="footer"><span class="refresh-hint">🔄 Abril actualiza cuando hay cambios</span></div>';
+  
+  document.getElementById('dashboard').innerHTML = html;
 }
 
 async function loadDashboard() {
-  document.getElementById('app').innerHTML = `
-    <div class="loading" style="padding:60px 20px;text-align:center;color:#475569">
-      <div style="font-size:40px;margin-bottom:12px"><img src="abril_face.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div>
-      Cargando dashboard...
-    </div>`;
+  document.getElementById('dashboard').innerHTML = '<div class="loading"><br><br>Cargando dashboard...</div>';
   const data = await fetchData();
   render(data);
 }
