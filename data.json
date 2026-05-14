@@ -1,6 +1,6 @@
 {
   "project": "Dashboard Abril",
-  "lastUpdate": "14/05, 01:40 p.m.",
+  "lastUpdate": "14/05, 08:58 p.m.",
   "folders": [
     {
       "name": "Generales",
@@ -25,7 +25,14 @@
       "name": "2E207C1",
       "id": "1yGTI4AzT9IpxdDM1h9LT09v6JmZWQkS_",
       "url": "https://drive.google.com/drive/folders/1yGTI4AzT9IpxdDM1h9LT09v6JmZWQkS_",
-      "files": []
+      "files": [
+        {
+          "name": "Plan_Trabajo_2E207C1.md",
+          "size": "8.7KB",
+          "date": "14/05/2026",
+          "type": "markdown"
+        }
+      ]
     },
     {
       "name": "2E208C1",
@@ -35,14 +42,14 @@
     }
   ],
   "stats": {
-    "totalDocuments": 2,
-    "processedToday": 0,
+    "totalDocuments": 3,
+    "processedToday": 1,
     "pendingProcessing": 0,
-    "lastActivity": "Dashboard configurado en GitHub Pages"
+    "lastActivity": "Plan de trabajo 2E207C1 elaborado"
   },
   "pipeline": {
     "status": "idle",
     "currentTask": null,
-    "lastTask": "Dashboard publicado en GitHub Pages ✅"
+    "lastTask": "✅ Plan de trabajo listo. Pendiente: iniciar análisis de gabinete"
   }
 }
